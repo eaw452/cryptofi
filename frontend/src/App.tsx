@@ -1,22 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useState } from 'react';
+import { createContext } from 'react';
+import { Dropdown } from './components/Dropdown';
+import { HoldingsTable } from './components/HoldingsTable';
+
 import './App.css';
 
+export const UserContext = createContext('1');
+
 function App() {
+  //Assumption is that there will only be user 1 and user 2. 
+  //Handling dynamic number of users requires DB query to get user Ids.
+  const [user, setUser] = useState('1');
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src="CryptoFi-logo.png" className="App-logo" alt="logo" />
-        <p>
-            Welcome to CryptoFi's Full-Stack Coding Challenge!
-        </p>
-        <p>
-            Please read the README.md file for instructions on how to complete this challenge.
-        </p>
-        <p>
-            Good luck!
-        </p>
-      </header>
+    <div className="Background">
+      <Dropdown user={user} setUser={setUser} />
+      <h2 className="Page-header">Available Coins</h2>
+      <UserContext.Provider value={user}>
+        <HoldingsTable />
+      </UserContext.Provider>
     </div>
   );
 }
